@@ -15,65 +15,64 @@ const slides = [
 		"image":"assets/images/slideshow/slide4.png",
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
+	
 ]
 
 let arrowLeft   = document.querySelector('.arrow_left')
 let arrowRight  = document.querySelector('.arrow_right')
 let img 		= document.querySelector('.banner-img')
-let dots 		= document.querySelectorAll('.dot')
-let dotSelected = 0
-// index de l'image affichée
-let indexImg	= 0
+let dots 		= document.querySelector('.dots')
 let p 			= document.querySelector('p')
-console.log(arrowLeft)
-console.log(arrowRight)
-console.log(img)
-console.log(dots)
 
+
+// index des éléments affichés
+let indexShowSlide	= 0
+
+// Création des points de repere
+
+for(let i=0; i<slides.length; i++){
+	let dot = document.createElement('div')
+	dot.className ='dot'
+	dots.append(dot)
+}
+
+// fonction de mise à jour du point de repere
+
+function showSlide(indexOfElement){
+		// mettre à jour l'image
+		img.src = slides[indexOfElement].image
+		p.innerHTML=slides[indexOfElement].tagLine
+	
+		// mettre à jour le point de repère
+		for(let index in dots.children){
+	
+			if(index == indexOfElement){
+				dots.children[index].className = 'dot dot_selected'
+			}else{
+				dots.children[index].className = 'dot'
+			}
+		}
+
+}
 // ***********les evenements**************
 
 
 // Le boutton suivant
 arrowRight.addEventListener('click', ()=> {
-	// incrementé les index pous les images et pour les points de repère
-	dotSelected = (dotSelected +1) % dots.length
-	indexImg	= (indexImg +1 ) % slides.length
+	// incrementé les index pour les images et pour les points de repère
+	indexShowSlide	= (indexShowSlide +1 ) % slides.length
 
-	// mette à jour la source d'image
-	img.src = slides[indexImg].image
-	p.innerHTML=slides[indexImg].tagLine
-
-	// mettre à jour le point de repère
-	for(let index in dots){
-
-		if(index == dotSelected){
-			dots[index].className = 'dot dot_selected'
-		}else{
-			dots[index].className = 'dot'
-		}
-	}
-
+	showSlide(indexShowSlide)
 })
 
 // le boutton précédent
 arrowLeft.addEventListener('click', ()=> {
-	// incrementé les index pous les images et pour les points de repère
-	dotSelected = (dotSelected-1 + dots.length) % dots.length
+	// incrementé l' ndex pour les images et pour les points de repère
+	indexShowSlide	= (indexShowSlide-1 + slides.length)%slides.length
 
-	indexImg	= (indexImg-1 + slides.length)%slides.length
-
-	// mette à jour la source d'image
-	img.src = slides[indexImg].image
-	p.innerHTML=slides[indexImg].tagLine
-
-		// mettre à jour le point de repère
-	for(let index in dots){
-
-		if(index == dotSelected){
-			dots[index].className = 'dot dot_selected'
-		}else{
-			dots[index].className = 'dot'
-		}
-	}
-
+	showSlide(indexShowSlide)
 })
+
+
+// on appelle la fonction ici pour montrer toujours le premier repere
+showSlide(indexShowSlide)
