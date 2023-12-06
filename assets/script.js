@@ -18,23 +18,15 @@ const slides = [
 	
 ]
 
-let arrowLeft   = document.querySelector('.arrow_left')
-let arrowRight  = document.querySelector('.arrow_right')
-let img 		= document.querySelector('.banner-img')
-let dots 		= document.querySelector('.dots')
-let p 			= document.querySelector('p')
+const arrowLeft   = document.querySelector('.arrow_left')
+const arrowRight  = document.querySelector('.arrow_right')
+const img 		  = document.querySelector('.banner-img')
+const dots 		  = document.querySelector('.dots')
+const p 		  = document.querySelector('p')
 
 
 // index des éléments affichés
 let indexShowSlide	= 0
-
-// Création des points de repere
-
-for(let i=0; i<slides.length; i++){
-	let dot = document.createElement('div')
-	dot.className ='dot'
-	dots.append(dot)
-}
 
 // fonction de mise à jour du point de repere
 
@@ -54,6 +46,20 @@ function showSlide(indexOfElement){
 		}
 
 }
+// Création des points de repere
+
+for(let i=0; i<slides.length; i++){
+	let dot = document.createElement('div')
+	dot.className ='dot'
+	dots.append(dot)
+
+	// Gestionnaire d'événement pour les points de répère
+	dot.addEventListener('click', ()=>{
+		showSlide(i)
+	})
+}
+
+
 // ***********les evenements**************
 
 
